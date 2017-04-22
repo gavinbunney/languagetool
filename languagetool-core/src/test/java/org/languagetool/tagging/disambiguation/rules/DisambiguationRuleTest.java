@@ -41,6 +41,7 @@ import org.languagetool.TestTools;
 import org.languagetool.XMLValidator;
 import org.languagetool.rules.patterns.PatternTestTools;
 import org.languagetool.tagging.disambiguation.xx.DemoDisambiguator;
+import org.languagetool.tools.StringTools;
 import org.xml.sax.SAXException;
 
 public class DisambiguationRuleTest {
@@ -102,7 +103,7 @@ public class DisambiguationRuleTest {
     String forms = wordForms.substring(wordForms.indexOf('[') + 1, wordForms.length() -1);
     String[] formToSort = forms.split(",");
     Arrays.sort(formToSort);
-    return word + String.join(",", Arrays.asList(formToSort)) + "]";
+    return word + StringTools.join(",", Arrays.asList(formToSort)) + "]";
   }
 
   private void testDisambiguationRulesFromXML(

@@ -78,16 +78,36 @@ public class RemoteLanguageTool {
     if (config.guessLanguage()) {
       append(params, "language", "auto");
     } else {
-      append(params, "language", config.getLangCode().orElse("auto"));
+      append(params, "language", config.getLangCode() != null ? config.getLangCode() : "auto");
     }
     if (config.getEnabledRuleIds().size() > 0) {
-      append(params, "enabledRules", String.join(",", config.getEnabledRuleIds()));
+      StringBuilder rulesBuilder = new StringBuilder();
+      for (String rule : config.getEnabledRuleIds()) {
+        rulesBuilder.append(rule).append(",");
+      }
+
+      String rules = rulesBuilder.toString();
+      if (rules.length() > 0) {
+        rules = rules.substring(0, rules.length() - 2);
+      }
+
+      append(params, "enabledRules", rules);
     }
     if (config.enabledOnly()) {
       append(params, "enabledOnly", "yes");
     }
     if (config.getDisabledRuleIds().size() > 0) {
-      append(params, "disabledRules", String.join(",", config.getDisabledRuleIds()));
+      StringBuilder rulesBuilder = new StringBuilder();
+      for (String rule : config.getDisabledRuleIds()) {
+        rulesBuilder.append(rule).append(",");
+      }
+
+      String rules = rulesBuilder.toString();
+      if (rules.length() > 0) {
+        rules = rules.substring(0, rules.length() - 2);
+      }
+
+      append(params, "disabledRules", rules);
     }
     append(params, "useragent", "java-http-client");
     return params.toString();

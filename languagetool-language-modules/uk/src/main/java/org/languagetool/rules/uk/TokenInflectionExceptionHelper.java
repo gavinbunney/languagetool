@@ -1,11 +1,6 @@
 package org.languagetool.rules.uk;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -835,8 +830,27 @@ final class TokenInflectionExceptionHelper {
   private static boolean caseGovernmentMatches(List<AnalyzedToken> adjTokenReadings, List<InflectionHelper.Inflection> slaveInflections) {
     // TODO: key tags (e.g. pos) should be part of the map key
     // but now we pass only adj token readings so it's ok
-    return adjTokenReadings.stream().map(p -> p.getLemma()).distinct().anyMatch( item -> {
-      Set<String> inflections = CaseGovernmentHelper.CASE_GOVERNMENT_MAP.get( item );
+//    return adjTokenReadings.stream().map(p -> p.getLemma()).distinct().anyMatch( item -> {
+//      Set<String> inflections = CaseGovernmentHelper.CASE_GOVERNMENT_MAP.get( item );
+//      //        System.err.println("Found inflections " + item + ": " + inflections);
+//      if( inflections != null ) {
+//        // TODO: shall we check for ranim/rinanim or is it overkill?
+//        for (InflectionHelper.Inflection inflection : slaveInflections) {
+//          if( inflections.contains(inflection._case) )
+//            return true;
+//        }
+//      }
+//      return false;
+//    }
+//        );
+    Set<String> uniqueLemma = new HashSet<>();
+    for (AnalyzedToken token : adjTokenReadings) {
+      String lemma = token.getLemma();
+      uniqueLemma.add(lemma);
+    }
+
+    for (String lemma : uniqueLemma) {
+      Set<String> inflections = CaseGovernmentHelper.CASE_GOVERNMENT_MAP.get( lemma );
       //        System.err.println("Found inflections " + item + ": " + inflections);
       if( inflections != null ) {
         // TODO: shall we check for ranim/rinanim or is it overkill?
@@ -845,9 +859,9 @@ final class TokenInflectionExceptionHelper {
             return true;
         }
       }
-      return false;
     }
-        );
+
+    return false;
   }
 
 

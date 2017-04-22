@@ -24,8 +24,10 @@ import org.languagetool.Language;
 
 import java.io.*;
 import java.lang.Character;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
@@ -34,6 +36,48 @@ import java.util.regex.Pattern;
  * @author Daniel Naber
  */
 public final class StringTools {
+
+  /**
+   * Gavin's java 8 string join replacer.
+   */
+  public static String join(String separator, List<String> stringList) {
+    return join(stringList, separator);
+  }
+
+  public static String join(List<String> stringList, String separator) {
+    StringBuilder joined = new StringBuilder();
+    for (String str : stringList) {
+      joined.append(str).append(separator);
+    }
+
+    String joinedString = joined.toString();
+    if (joinedString.length() > 0) {
+      return joinedString.substring(0, joinedString.length() - 1 - separator.length());
+    } else {
+      return joinedString;
+    }
+  }
+
+  /**
+   * Gavin's java 8 string join replacer.
+   */
+  public static String join(String separator, Set<String> stringList) {
+    return join(stringList, separator);
+  }
+
+  public static String join(Set<String> stringList, String separator) {
+    StringBuilder joined = new StringBuilder();
+    for (String str : stringList) {
+      joined.append(str).append(separator);
+    }
+
+    String joinedString = joined.toString();
+    if (joinedString.length() > 0) {
+      return joinedString.substring(0, joinedString.length() - 1 - separator.length());
+    } else {
+      return joinedString;
+    }
+  }
 
   /**
    * Constants for printing XML rule matches.

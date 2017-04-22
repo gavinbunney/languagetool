@@ -32,6 +32,7 @@ import org.languagetool.AnalyzedTokenReadings;
 import org.languagetool.rules.Categories;
 import org.languagetool.rules.Rule;
 import org.languagetool.rules.RuleMatch;
+import org.languagetool.tools.StringTools;
 
 /**
  * A rule that matches words Latin and Cyrillic characters in them
@@ -146,7 +147,7 @@ public class MixedAlphabetsRule extends Rule {
   
   private RuleMatch createRuleMatch(AnalyzedTokenReadings readings, List<String> replacements) {
     String tokenString = readings.getToken();
-    String msg = tokenString + getSuggestion(tokenString) + String.join(", ", replacements);
+    String msg = tokenString + getSuggestion(tokenString) + StringTools.join(", ", replacements);
     
     return createRuleMatch(readings, replacements, msg);
   }

@@ -163,8 +163,8 @@ public class StringToolsTest {
     list.add("foo");
     list.add("bar");
     list.add(",");
-    assertEquals("foo,bar,,", String.join(",", list));
-    assertEquals("foo\tbar\t,", String.join("\t", list));
+    assertEquals("foo,bar,,", StringTools.join(",", list));
+    assertEquals("foo\tbar\t,", StringTools.join("\t", list));
   }
 
   @Test

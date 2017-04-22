@@ -303,7 +303,7 @@ public class TokenInflectionAgreementRule extends Rule {
     
     for (Inflection inflection : inflections) {
       if( ! map.containsKey(inflection.gender) ) {
-        map.put(inflection.gender, new ArrayList<>());
+        map.put(inflection.gender, new ArrayList<String>());
       }
       String caseStr = PosTagHelper.VIDMINKY_MAP.get(inflection._case);
       if( adj && inflection.animTag != null ) {

@@ -55,7 +55,10 @@ public class MultiLanguageModel implements LanguageModel {
 
   @Override
   public void close() {
-    lms.stream().forEach(LanguageModel::close);
+//    lms.stream().forEach(LanguageModel::close);
+    for (LanguageModel lm : lms) {
+      lm.close();
+    }
   }
 
   @Override

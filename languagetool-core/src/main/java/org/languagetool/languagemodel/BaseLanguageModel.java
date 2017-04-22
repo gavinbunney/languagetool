@@ -19,6 +19,7 @@
 package org.languagetool.languagemodel;
 
 import org.languagetool.rules.ngrams.Probability;
+import org.languagetool.tools.StringTools;
 
 import java.util.List;
 import java.util.Locale;
@@ -74,7 +75,7 @@ public abstract class BaseLanguageModel implements LanguageModel {
       }
       p *= thisP;
     }
-    debug("  " + String.join(" ", context) + " => %.20f\n", p);
+    debug("  " + StringTools.join(context, " ") + " => %.20f\n", p);
     return new Probability(p, (float)coverage/maxCoverage, totalCount);
   }
 

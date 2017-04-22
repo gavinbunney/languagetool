@@ -24,6 +24,7 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
 import org.apache.lucene.store.FSDirectory;
 import org.languagetool.Experimental;
+import org.languagetool.tools.StringTools;
 
 import java.io.File;
 import java.io.IOException;
@@ -128,7 +129,7 @@ public class LuceneSingleIndexLanguageModel extends BaseLanguageModel {
       throw new RuntimeException("Requested " + tokens.size() + "gram but index has only up to " + maxNgram + "gram: " + tokens);
     }
     Objects.requireNonNull(tokens);
-    Term term = new Term("ngram", String.join(" ", tokens));
+    Term term = new Term("ngram", StringTools.join(tokens, " "));
     return getCount(term, getLuceneSearcher(tokens.size()));
   }
 

@@ -19,12 +19,8 @@
 package org.languagetool.rules;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.stream.Collectors;
+import java.util.*;
+//import java.util.stream.Collectors;
 
 import org.languagetool.AnalyzedSentence;
 import org.languagetool.AnalyzedToken;
@@ -93,7 +89,7 @@ public abstract class AbstractSimpleReplaceRule extends Rule {
 
   public String getMessage(String tokenStr, List<String> replacements) {
     return tokenStr + " is not valid. Use: "
-        + String.join(", ", replacements) + ".";
+        + StringTools.join(replacements, ", ") + ".";
   }
 
   public String getShort() {
@@ -151,7 +147,9 @@ public abstract class AbstractSimpleReplaceRule extends Rule {
           }
         }
 
-        possibleReplacements = possibleReplacements.stream().distinct().collect(Collectors.toList());
+//        possibleReplacements = possibleReplacements.stream().distinct().collect(Collectors.toList());
+        Set<String> uniqueReplacements = new HashSet<>(possibleReplacements);
+        possibleReplacements = new ArrayList<>(uniqueReplacements);
       }
 
       if (possibleReplacements != null && possibleReplacements.size() > 0) {

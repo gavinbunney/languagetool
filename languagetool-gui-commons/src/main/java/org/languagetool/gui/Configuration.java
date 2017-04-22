@@ -24,6 +24,7 @@ import org.languagetool.JLanguageTool;
 import org.languagetool.Language;
 import org.languagetool.Languages;
 import org.languagetool.rules.ITSIssueType;
+import org.languagetool.tools.StringTools;
 
 import java.awt.*;
 import java.io.*;
@@ -536,7 +537,7 @@ public class Configuration {
     if (list == null) {
       props.setProperty(key, "");
     } else {
-      props.setProperty(key, String.join(DELIMITER,  list));
+      props.setProperty(key, StringTools.join(DELIMITER,  list));
     }
   }
 }

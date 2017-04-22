@@ -29,11 +29,8 @@ import org.languagetool.rules.RuleMatch;
 import org.languagetool.rules.patterns.PatternRule;
 import org.languagetool.rules.patterns.PatternToken;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
+//import java.util.stream.Collectors;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertFalse;
@@ -55,18 +52,18 @@ public class ToolsTest {
   @Test
   public void testSelectRules() {
     Demo demo = new Demo();
-    expectDemoRuleId(Collections.emptySet(), Collections.emptySet(), Collections.emptySet(), Collections.emptySet(), false, demo);
-    expectNotDemoRuleId(Collections.emptySet(), Collections.emptySet(), Collections.singleton("DEMO_RULE"), Collections.emptySet(), false, demo);
-    expectNotDemoRuleId(Collections.singleton(CategoryIds.MISC), Collections.emptySet(), Collections.emptySet(), Collections.emptySet(), false, demo);
+    expectDemoRuleId(new HashSet<CategoryId>(), new HashSet<CategoryId>(), new HashSet<String>(), new HashSet<String>(), false, demo);
+    expectNotDemoRuleId(new HashSet<CategoryId>(), new HashSet<CategoryId>(), Collections.singleton("DEMO_RULE"), new HashSet<String>(), false, demo);
+    expectNotDemoRuleId(Collections.singleton(CategoryIds.MISC), new HashSet<CategoryId>(), new HashSet<String>(), new HashSet<String>(), false, demo);
     // disable category, but enable rule:
-    expectDemoRuleId(Collections.singleton(CategoryIds.MISC), Collections.emptySet(), Collections.emptySet(), Collections.singleton("DEMO_RULE"), false, demo);
+    expectDemoRuleId(Collections.singleton(CategoryIds.MISC), new HashSet<CategoryId>(), new HashSet<String>(), Collections.singleton("DEMO_RULE"), false, demo);
 
     // now with enablesOnly=true:
-    expectDemoRuleId(Collections.emptySet(), Collections.emptySet(), Collections.emptySet(), Collections.emptySet(), true, demo);
-    expectNotDemoRuleId(Collections.emptySet(), Collections.emptySet(), Collections.singleton("DEMO_RULE"), Collections.emptySet(), true, demo);
-    expectNotDemoRuleId(Collections.singleton(CategoryIds.MISC), Collections.emptySet(), Collections.emptySet(), Collections.emptySet(), true, demo);
-    expectDemoRuleId(Collections.emptySet(), Collections.singleton(CategoryIds.MISC), Collections.emptySet(), Collections.emptySet(), true, demo);
-    expectNotDemoRuleId(Collections.emptySet(), Collections.singleton(CategoryIds.CASING), Collections.emptySet(), Collections.emptySet(), true, demo);
+    expectDemoRuleId(new HashSet<CategoryId>(), new HashSet<CategoryId>(), new HashSet<String>(), new HashSet<String>(), true, demo);
+    expectNotDemoRuleId(new HashSet<CategoryId>(), new HashSet<CategoryId>(), Collections.singleton("DEMO_RULE"), new HashSet<String>(), true, demo);
+    expectNotDemoRuleId(Collections.singleton(CategoryIds.MISC), new HashSet<CategoryId>(), new HashSet<String>(), new HashSet<String>(), true, demo);
+    expectDemoRuleId(new HashSet<CategoryId>(), Collections.singleton(CategoryIds.MISC), new HashSet<String>(), new HashSet<String>(), true, demo);
+    expectNotDemoRuleId(new HashSet<CategoryId>(), Collections.singleton(CategoryIds.CASING), new HashSet<String>(), new HashSet<String>(), true, demo);
   }
 
   private void expectDemoRuleId(Set<CategoryId> disabledCategories, Set<CategoryId> enabledCategories,
@@ -85,7 +82,13 @@ public class ToolsTest {
 
   private List<String> getRuleIds(JLanguageTool lt) {
     List<Rule> allActiveRules = lt.getAllActiveRules();
-    return allActiveRules.stream().map(Rule::getId).collect(Collectors.toList());
+//    return allActiveRules.stream().map(Rule::getId).collect(Collectors.toList());
+    List<String> ruleIds = new ArrayList<>();
+    for (Rule rule : allActiveRules) {
+      ruleIds.add(rule.getId());
+    }
+
+    return ruleIds;
   }
 
   private static class FakeRule extends PatternRule {

@@ -20,7 +20,6 @@ package org.languagetool.remote;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Configuration for checking a text with {@link RemoteLanguageTool}.
@@ -50,8 +49,8 @@ public class CheckConfiguration {
     this.disabledRuleIds = Objects.requireNonNull(disabledRuleIds);
   }
 
-  public Optional<String> getLangCode() {
-    return Optional.ofNullable(langCode);
+  public String getLangCode() {
+    return langCode;
   }
 
   public String getMotherTongueLangCode() {

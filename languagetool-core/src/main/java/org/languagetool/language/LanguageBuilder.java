@@ -51,12 +51,12 @@ public final class LanguageBuilder {
    * e.g. <tt>rules-de-German.xml</tt> and builds
    * a Language object for that language.
    */
-  private static Language makeLanguage(File file, boolean isAdditional) throws IllegalAccessException, InstantiationException {
+  private static Language makeLanguage(final File file, final boolean isAdditional) throws IllegalAccessException, InstantiationException {
     Objects.requireNonNull(file, "file cannot be null");
     if (!file.getName().endsWith(".xml")) {
       throw new RuleFilenameException(file);
     }
-    String[] parts = file.getName().split("-");
+    final String[] parts = file.getName().split("-");
     boolean startsWithRules = parts[0].equals("rules");
     boolean secondPartHasCorrectLength = parts.length == 3 &&
             (parts[1].length() == "en".length() || parts[1].length() == "ast".length() || parts[1].length() == "en_US".length());

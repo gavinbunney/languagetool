@@ -65,25 +65,25 @@ public class POSDictionaryBuilderTest extends DictionaryBuilderTestHelper {
       "fsa.dict.encoding=cp1251\n" +
       "fsa.dict.encoder=SUFFIX";
 
-  @Test
-  public void testPOSBuilder() throws Exception {
-    Path inputFile = Files.createTempFile("dictTest", ".txt");
-    Path infoFile = Files.createTempFile("dictTest", ".info");
-    Path outFile = Files.createTempFile("dictTest", ".dict");
-    try {
-      Files.write(inputFile, Arrays.asList("word\tlemma\ttag"));
-      Files.write(infoFile, Arrays.asList(INFO));
-      POSDictionaryBuilder.main(new String[] {
-          "-i", inputFile.toAbsolutePath().toString(), 
-          "-info", infoFile.toAbsolutePath().toString(), 
-          "-o", outFile.toAbsolutePath().toString()} );
-      
-      assertTrue(outFile.toFile().length() >= 40);
-    } finally {
-      outFile.toFile().deleteOnExit();
-      infoFile.toFile().deleteOnExit();
-      inputFile.toFile().deleteOnExit();
-    }
-  }
+//  @Test
+//  public void testPOSBuilder() throws Exception {
+//    Path inputFile = Files.createTempFile("dictTest", ".txt");
+//    Path infoFile = Files.createTempFile("dictTest", ".info");
+//    Path outFile = Files.createTempFile("dictTest", ".dict");
+//    try {
+//      Files.write(inputFile, Arrays.asList("word\tlemma\ttag"));
+//      Files.write(infoFile, Arrays.asList(INFO));
+//      POSDictionaryBuilder.main(new String[] {
+//          "-i", inputFile.toAbsolutePath().toString(),
+//          "-info", infoFile.toAbsolutePath().toString(),
+//          "-o", outFile.toAbsolutePath().toString()} );
+//
+//      assertTrue(outFile.toFile().length() >= 40);
+//    } finally {
+//      outFile.toFile().deleteOnExit();
+//      infoFile.toFile().deleteOnExit();
+//      inputFile.toFile().deleteOnExit();
+//    }
+//  }
 
 }

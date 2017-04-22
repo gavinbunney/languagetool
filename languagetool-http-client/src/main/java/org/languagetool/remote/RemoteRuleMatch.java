@@ -21,7 +21,6 @@ package org.languagetool.remote;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * A potential error as returned by the HTTP API of LanguageTool.
@@ -59,8 +58,8 @@ public class RemoteRuleMatch {
   }
 
   /** Optional sub id (rule groups have a sub id for each rule). */
-  public Optional<String> getRuleSubId() {
-    return Optional.ofNullable(subId);
+  public String getRuleSubId() {
+    return subId;
   }
 
   /** A text describing the error to the user. */
@@ -69,16 +68,16 @@ public class RemoteRuleMatch {
   }
 
   /** Optional short message describing the error. */
-  public Optional<String> getShortMessage() {
-    return Optional.ofNullable(shortMsg);
+  public String getShortMessage() {
+    return shortMsg;
   }
 
   /**
    * Potential corrections for the error. Note that corrections might be wrong and
    * they are not necessarily ordered by quality.
    */
-  public Optional<List<String>> getReplacements() {
-    return Optional.ofNullable(replacements);
+  public List<String> getReplacements() {
+    return replacements;
   }
 
   /** The error in its context. See {@link #getContextOffset()} and {@link #getErrorLength()} to get the exact position. */
@@ -102,22 +101,22 @@ public class RemoteRuleMatch {
   }
 
   /** URL with a more detailed explanation of the error. */
-  public Optional<String> getUrl() {
-    return Optional.ofNullable(url);
+  public String getUrl() {
+    return url;
   }
 
   /** The error's category. */
-  public Optional<String> getCategory() {
-    return Optional.of(category);
+  public String getCategory() {
+    return category;
   }
 
   /** The id of the error's category. */
-  public Optional<String> getCategoryId() {
-    return Optional.of(categoryId);
+  public String getCategoryId() {
+    return categoryId;
   }
 
-  public Optional<String> getLocQualityIssueType() {
-    return Optional.ofNullable(locQualityIssueType);
+  public String getLocQualityIssueType() {
+    return locQualityIssueType;
   }
 
   //

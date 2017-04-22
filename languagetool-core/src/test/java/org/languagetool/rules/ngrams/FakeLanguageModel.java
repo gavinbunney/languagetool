@@ -19,6 +19,7 @@
 package org.languagetool.rules.ngrams;
 
 import org.languagetool.languagemodel.LuceneSingleIndexLanguageModel;
+import org.languagetool.tools.StringTools;
 
 import java.io.File;
 import java.util.Arrays;
@@ -56,7 +57,7 @@ public class FakeLanguageModel extends LuceneSingleIndexLanguageModel {
 
   @Override
   public long getCount(List<String> tokens) {
-    Integer count = map.get(String.join(" ", tokens));
+    Integer count = map.get(StringTools.join(tokens, " "));
     return count == null ? 0 : count;
   }
 

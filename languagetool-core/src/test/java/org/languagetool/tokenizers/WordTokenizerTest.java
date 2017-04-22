@@ -20,6 +20,7 @@
 package org.languagetool.tokenizers;
 
 import org.junit.Test;
+import org.languagetool.tools.StringTools;
 
 import java.util.List;
 
@@ -112,7 +113,7 @@ public class WordTokenizerTest {
 
   private String tokenize(String text) {
     List<String> tokens = wordTokenizer.tokenize(text);
-    return String.join("|", tokens);
+    return StringTools.join("|", tokens);
   }
   
 }

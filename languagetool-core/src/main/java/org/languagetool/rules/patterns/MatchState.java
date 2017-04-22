@@ -378,7 +378,8 @@ public class MatchState {
    */
   final String toTokenString() throws IOException {
     String[] stringToFormat = toFinalString(null);
-    return String.join("|", Arrays.asList(stringToFormat));
+//    return String.join("|", Arrays.asList(stringToFormat));
+    return StringTools.join(Arrays.asList(stringToFormat), "|");
   }
 
   public Match getMatch() {

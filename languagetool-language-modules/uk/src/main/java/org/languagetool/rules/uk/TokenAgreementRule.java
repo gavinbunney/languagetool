@@ -43,6 +43,7 @@ import org.languagetool.rules.RuleMatch;
 import org.languagetool.synthesis.Synthesizer;
 import org.languagetool.tagging.uk.IPOSTag;
 import org.languagetool.tagging.uk.PosTagHelper;
+import org.languagetool.tools.StringTools;
 
 /**
  * A rule that checks if tokens in the sentence agree on inflection etc
@@ -423,7 +424,7 @@ public class TokenAgreementRule extends Rule {
 
     List<String> suggestions = new ArrayList<>();
     
-    String requiredPostTagsRegEx = ":(" + String.join("|", posTagsToFind) + ")";
+    String requiredPostTagsRegEx = ":(" + StringTools.join("|", posTagsToFind) + ")";
     for (AnalyzedToken analyzedToken: tokenReadings.getReadings()) {
     
       String oldPosTag = analyzedToken.getPOSTag();
@@ -480,7 +481,7 @@ public class TokenAgreementRule extends Rule {
     }
 
     String msg = MessageFormat.format("Прийменник «{0}» вимагає іншого відмінка: {1}, а знайдено: {2}", 
-        reqTokenReadings.getToken(), String.join(", ", reqVidminkyNames), String.join(", ", foundVidminkyNames));
+        reqTokenReadings.getToken(), StringTools.join(", ", reqVidminkyNames), StringTools.join(", ", foundVidminkyNames));
         
     if( tokenString.equals("їх") && requiredPostTagsRegEx != null ) {
       msg += ". Можливо тут потрібно присвійний займенник «їхній»?";

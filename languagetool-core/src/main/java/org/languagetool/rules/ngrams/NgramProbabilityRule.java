@@ -64,7 +64,7 @@ public class NgramProbabilityRule extends Rule {
     new Replacement("NN", "NNS")
   ));
 
-  private static final List<AdvancedReplacement> ADV_REPLACEMENTS = Collections.unmodifiableList(Arrays.asList(
+  private static final List<AdvancedReplacement> ADV_REPLACEMENTS = Arrays.asList(
     // "$1" is the token in the middle of the ngram:
     /*new AdvancedReplacement(Arrays.asList(
       new PatternTokenBuilder().tokenRegex("a|an|the").negate().build(),
@@ -76,7 +76,7 @@ public class NgramProbabilityRule extends Rule {
       new PatternTokenBuilder().tokenRegex("a|an|the").negate().build(),
       new PatternTokenBuilder().posRegex("NN").build()),
       "$1 the")*/
-  ));
+  );
 
   private final LanguageModel lm;
   private final Language language;
@@ -176,9 +176,9 @@ public class NgramProbabilityRule extends Rule {
     List<Alternative> betterAlternatives = new ArrayList<>();
     boolean alternativesConsidered = false;
     for (Replacement replacement : REPLACEMENTS) {
-      Optional<List<Alternative>> alternatives = getBetterAlternatives(replacement, prevToken, googleToken, next, p);
-      if (alternatives.isPresent()) {
-        betterAlternatives.addAll(alternatives.get());
+      List<Alternative> alternatives = getBetterAlternatives(replacement, prevToken, googleToken, next, p);
+      if (alternatives != null) {
+        betterAlternatives.addAll(alternatives);
         alternativesConsidered = true;
       }
     }
@@ -209,13 +209,13 @@ public class NgramProbabilityRule extends Rule {
     return new Alternatives(betterAlternatives, alternativesConsidered);
   }
   
-  private Optional<List<Alternative>> getBetterAlternatives(Replacement replacement, GoogleToken prevToken, GoogleToken token, GoogleToken next, Probability p) throws IOException {
-    Optional<AnalyzedToken> reading = getByPosTag(token.getPosTags(), replacement.tagRegex);
+  private List<Alternative> getBetterAlternatives(Replacement replacement, GoogleToken prevToken, GoogleToken token, GoogleToken next, Probability p) throws IOException {
+    AnalyzedToken reading = getByPosTag(token.getPosTags(), replacement.tagRegex);
     List<Alternative> betterAlternatives = new ArrayList<>();
-    if (reading.isPresent()) {
+    if (reading != null) {
       Synthesizer synthesizer = language.getSynthesizer();
       if (synthesizer != null) {
-        String[] forms = synthesizer.synthesize(new AnalyzedToken(token.token, "not_used", reading.get().getLemma()), replacement.alternativeTag);
+        String[] forms = synthesizer.synthesize(new AnalyzedToken(token.token, "not_used", reading.getLemma()), replacement.alternativeTag);
         for (String alternativeToken : forms) {
           if (alternativeToken.equals(token)) {
             continue;
@@ -230,19 +230,19 @@ public class NgramProbabilityRule extends Rule {
             debug("Less probable alternative to '%s': %s\n", ngram, alternativeNgram);
           }
         }
-        return Optional.of(betterAlternatives);
+        return betterAlternatives;
       }
     }
-    return Optional.empty();
+    return null;
   }
 
-  private Optional<AnalyzedToken> getByPosTag(Set<AnalyzedToken> tokens, String wantedPosTagRegex) {
+  private AnalyzedToken getByPosTag(Set<AnalyzedToken> tokens, String wantedPosTagRegex) {
     for (AnalyzedToken token : tokens) {
       if (token.getPOSTag() != null && token.getPOSTag().matches(wantedPosTagRegex)) {
-        return Optional.of(token);
+        return token;
       }
     }
-    return Optional.empty();
+    return null;
   }
 
   @Override

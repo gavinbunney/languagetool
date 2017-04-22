@@ -30,7 +30,7 @@ import org.xml.sax.SAXException;
 
 import java.text.MessageFormat;
 import java.util.*;
-import java.util.stream.Collectors;
+//import java.util.stream.Collectors;
 
 class FalseFriendRuleHandler extends XMLRuleHandler {
 
@@ -196,7 +196,19 @@ class FalseFriendRuleHandler extends XMLRuleHandler {
   }
 
   private String formatTranslations(List<StringBuilder> translations) {
-    return translations.stream().map(o -> "\"" + o + "\"").collect(Collectors.joining(", "));
+//    return translations.stream().map(o -> "\"" + o + "\"").collect(Collectors.joining(", "));
+    StringBuilder joined = new StringBuilder();
+    for (StringBuilder translation : translations) {
+      String translated = "\"" + translation.toString() + "\"";
+      joined.append(translated).append(", ");
+    }
+
+    String joinedString = joined.toString().trim();
+    if (joinedString.length() > 0) {
+      return joinedString.substring(0, joinedString.length() - 2);
+    } else {
+      return joinedString;
+    }
   }
 
   @Override

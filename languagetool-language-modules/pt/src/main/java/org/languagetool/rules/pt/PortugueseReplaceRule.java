@@ -22,6 +22,7 @@ import org.languagetool.rules.AbstractSimpleReplaceRule;
 import org.languagetool.rules.Example;
 import org.languagetool.rules.Categories;
 import org.languagetool.rules.ITSIssueType;
+import org.languagetool.tools.StringTools;
 
 import java.io.IOException;
 import java.util.List;
@@ -73,7 +74,7 @@ public class PortugueseReplaceRule extends AbstractSimpleReplaceRule {
   @Override
   public String getMessage(String tokenStr, List<String> replacements) {
     return tokenStr + " é um estrangeirismo. Em Português é mais comum usar: "
-        + String.join(", ", replacements) + ".";
+        + StringTools.join(", ", replacements) + ".";
   }
 
   @Override

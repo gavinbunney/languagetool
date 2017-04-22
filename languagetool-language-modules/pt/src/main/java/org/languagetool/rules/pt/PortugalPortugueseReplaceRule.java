@@ -22,6 +22,7 @@ import org.languagetool.rules.AbstractSimpleReplaceRule;
 import org.languagetool.rules.Example;
 import org.languagetool.rules.Categories;
 import org.languagetool.rules.ITSIssueType;
+import org.languagetool.tools.StringTools;
 
 import java.io.IOException;
 import java.util.List;
@@ -76,7 +77,7 @@ public class PortugalPortugueseReplaceRule extends AbstractSimpleReplaceRule {
   @Override
   public String getMessage(String tokenStr, List<String> replacements) {
     return tokenStr + " é uma expressão brasileira, em Português de Portugal utiliza-se: "
-        + String.join(", ", replacements) + ".";
+        + StringTools.join(", ", replacements) + ".";
   }
 
   @Override

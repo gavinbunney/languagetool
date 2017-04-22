@@ -137,7 +137,7 @@ public class PatternRule extends AbstractPatternRule {
     for (PatternToken patternPatternToken : patternTokens) {
       strList.add(patternPatternToken.toString());
     }
-    return String.join(", ", strList);
+    return StringTools.join(strList, ", ");
   }
 
   /**

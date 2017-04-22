@@ -545,7 +545,7 @@ public final class AnalyzedTokenReadings implements Iterable<AnalyzedToken> {
    */
   @Override
   public Iterator<AnalyzedToken> iterator() {
-    AtomicInteger i = new AtomicInteger(0);
+    final AtomicInteger i = new AtomicInteger(0);
     return new Iterator<AnalyzedToken>() {
       @Override
       public boolean hasNext() {

@@ -70,26 +70,26 @@ public class SynthDictionaryBuilderTest extends DictionaryBuilderTestHelper {
     }
   }
   
-  @Test
-  public void testSynthBuilder() throws Exception {
-    Path inputFile = Files.createTempFile("dictTest", ".txt");
-    Path infoFile = Files.createTempFile("dictTest", "_synth.info");
-    Path outFile = Files.createTempFile("dictTest", ".dict");
-    try {
-      Files.write(inputFile, Arrays.asList("word\tlemma\ttag"));
-      Files.write(infoFile, Arrays.asList(INFO));
-      
-      SynthDictionaryBuilder.main(new String[] {
-          "-i", inputFile.toAbsolutePath().toString(), 
-          "-info", infoFile.toAbsolutePath().toString(), 
-          "-o", outFile.toAbsolutePath().toString()} );
-      
-      assertTrue(outFile.toFile().length() >= 40);
-    } finally {
-      inputFile.toFile().deleteOnExit();
-      infoFile.toFile().deleteOnExit();
-      outFile.toFile().deleteOnExit();
-    }
-  }
+//  @Test
+//  public void testSynthBuilder() throws Exception {
+//    Path inputFile = Files.createTempFile("dictTest", ".txt");
+//    Path infoFile = Files.createTempFile("dictTest", "_synth.info");
+//    Path outFile = Files.createTempFile("dictTest", ".dict");
+//    try {
+//      Files.write(inputFile, Arrays.asList("word\tlemma\ttag"));
+//      Files.write(infoFile, Arrays.asList(INFO));
+//
+//      SynthDictionaryBuilder.main(new String[] {
+//          "-i", inputFile.toAbsolutePath().toString(),
+//          "-info", infoFile.toAbsolutePath().toString(),
+//          "-o", outFile.toAbsolutePath().toString()} );
+//
+//      assertTrue(outFile.toFile().length() >= 40);
+//    } finally {
+//      inputFile.toFile().deleteOnExit();
+//      infoFile.toFile().deleteOnExit();
+//      outFile.toFile().deleteOnExit();
+//    }
+//  }
 
 }

@@ -33,7 +33,7 @@ import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
+//import java.util.stream.Collectors;
 
 /**
  * Loads {@link PatternRule}s from a false friends XML file.
@@ -81,7 +81,19 @@ public class FalseFriendRuleLoader extends DefaultHandler {
   }
 
   private String formatSuggestions(List<String> l) {
-    return l.stream().map(o -> "<suggestion>" + o + "</suggestion>").collect(Collectors.joining(", "));
+//    return l.stream().map(o -> "<suggestion>" + o + "</suggestion>").collect(Collectors.joining(", "));
+    StringBuilder joined = new StringBuilder();
+    for (String value : l) {
+      String translated = "<suggestion>" + value + "</suggestion>";
+      joined.append(translated).append(", ");
+    }
+
+    String joinedString = joined.toString().trim();
+    if (joinedString.length() > 0) {
+      return joinedString.substring(0, joinedString.length() - 2);
+    } else {
+      return joinedString;
+    }
   }
 
 }

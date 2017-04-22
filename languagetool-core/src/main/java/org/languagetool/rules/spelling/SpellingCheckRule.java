@@ -33,7 +33,6 @@ import org.languagetool.tools.StringTools;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * An abstract rule for spellchecking rules.
@@ -58,7 +57,13 @@ public abstract class SpellingCheckRule extends Rule {
   private static final String SPELLING_IGNORE_FILE = "/hunspell/ignore.txt";
   private static final String SPELLING_FILE = "/hunspell/spelling.txt";
   private static final String SPELLING_PROHIBIT_FILE = "/hunspell/prohibit.txt";
-  private static final Comparator<String> STRING_LENGTH_COMPARATOR = Comparator.comparingInt(String::length);
+//  private static final Comparator<String> STRING_LENGTH_COMPARATOR = Comparator.comparingInt(String::length);
+  private static final Comparator<String> STRING_LENGTH_COMPARATOR = new Comparator<String>() {
+    @Override
+    public int compare(String o1, String o2) {
+      return Integer.compare(o1.length(), o2.length());
+    }
+  };
   private Map<String,Set<String>> wordsToBeIgnoredDictionary = new HashMap<>();
   private Map<String,Set<String>> wordsToBeIgnoredDictionaryIgnoreCase = new HashMap<>();
   private final Set<String> wordsToBeIgnored = new HashSet<>();
@@ -106,13 +111,36 @@ public abstract class SpellingCheckRule extends Rule {
   //(re)create a Map<String, Set<String>> of all words to be ignored:
   // The words' first char serves as key, and the Set<String> contains all Strings starting with this char
   private void updateIgnoredWordDictionary() {
-    wordsToBeIgnoredDictionary = wordsToBeIgnored
-                                   .stream()
-                                   .collect(Collectors.groupingBy(s -> s.substring(0,1), Collectors.toSet()));
-    wordsToBeIgnoredDictionaryIgnoreCase = wordsToBeIgnored
-                                             .stream()
-                                             .map(s -> s.toLowerCase())
-                                             .collect(Collectors.groupingBy(s -> s.substring(0,1), Collectors.toSet()));
+//    wordsToBeIgnoredDictionary = wordsToBeIgnored
+//                                   .stream()
+//                                   .collect(Collectors.groupingBy(s -> s.substring(0,1), Collectors.toSet()));
+//    wordsToBeIgnoredDictionaryIgnoreCase = wordsToBeIgnored
+//                                             .stream()
+//                                             .map(s -> s.toLowerCase())
+//                                             .collect(Collectors.groupingBy(s -> s.substring(0,1), Collectors.toSet()));
+
+    Map<String, Set<String>> wordsGrouped = new HashMap<String, Set<String>>();
+    Map<String, Set<String>> wordsGroupedLowerCased = new HashMap<String, Set<String>>();
+    for (String word : wordsToBeIgnored) {
+      if (word == null) {
+        continue;
+      }
+
+      String wordLowered = word.toLowerCase();
+      String firstChar = Character.toString(word.charAt(0));
+      if (wordsGrouped.get(firstChar) == null) {
+        wordsGrouped.put(firstChar, new HashSet<String>());
+      }
+      if (wordsGroupedLowerCased.get(firstChar) == null) {
+        wordsGroupedLowerCased.put(firstChar, new HashSet<String>());
+      }
+
+      wordsGrouped.get(firstChar).add(word);
+      wordsGroupedLowerCased.get(firstChar).add(wordLowered);
+    }
+
+    wordsToBeIgnoredDictionary = wordsGrouped;
+    wordsToBeIgnoredDictionaryIgnoreCase = wordsGroupedLowerCased;
   }
 
   /**
@@ -362,20 +390,43 @@ public abstract class SpellingCheckRule extends Rule {
     if (word.length() < 4) {
       return 0;
     }
-    Optional<String> match = null;
+    String match = null;
     if(caseSensitive) {
       Set<String> subset = wordsToBeIgnoredDictionary.get(word.substring(0, 1));
       if (subset != null) {
-        match = subset.stream().filter(s -> word.startsWith(s)).max(STRING_LENGTH_COMPARATOR);
+//        match = subset.stream().filter(s -> word.startsWith(s)).max(STRING_LENGTH_COMPARATOR);
+        for (String subsetWord : subset) {
+          if (word.startsWith(subsetWord)) {
+            if (match == null) {
+              match = subsetWord;
+            } else {
+              if (STRING_LENGTH_COMPARATOR.compare(match, subsetWord) < 0) {
+                match = subsetWord;
+              }
+            }
+          }
+        }
       }
     } else {
       String lowerCaseWord = word.toLowerCase();
       Set<String> subset = wordsToBeIgnoredDictionaryIgnoreCase.get(lowerCaseWord.substring(0, 1));
       if (subset != null) {
-        match = subset.stream().filter(s -> lowerCaseWord.startsWith(s)).max(STRING_LENGTH_COMPARATOR);
+//        match = subset.stream().filter(s -> lowerCaseWord.startsWith(s)).max(STRING_LENGTH_COMPARATOR);
+        String bestMatch = null;
+        for (String subsetWord : subset) {
+          if (lowerCaseWord.startsWith(subsetWord)) {
+            if (bestMatch == null) {
+              bestMatch = subsetWord;
+            } else {
+              if (STRING_LENGTH_COMPARATOR.compare(bestMatch, subsetWord) < 0) {
+                bestMatch = subsetWord;
+              }
+            }
+          }
+        }
       }
     }
-    return match != null && match.isPresent() ? match.get().length() : 0;
+    return match != null ? match.length() : 0;
   }
 
 }

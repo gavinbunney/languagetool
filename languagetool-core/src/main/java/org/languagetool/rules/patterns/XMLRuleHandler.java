@@ -308,7 +308,13 @@ public class XMLRuleHandler extends DefaultHandler {
       }
     }
 
-    phraseMap.put(phraseId, new ArrayList<>(phrasePatternTokens));
+//    phraseMap.put(phraseId, new ArrayList<>(phrasePatternTokens));
+    List<List<PatternToken>> subPT = new ArrayList<>();
+    for (ArrayList<PatternToken> pp : phrasePatternTokens) {
+      subPT.add(new ArrayList<>(pp));
+    }
+
+    phraseMap.put(phraseId, new ArrayList<>(subPT));
     patternTokens.clear();
 
     phrasePatternTokens.clear();

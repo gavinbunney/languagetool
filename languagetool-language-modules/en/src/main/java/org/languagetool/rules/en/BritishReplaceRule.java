@@ -21,6 +21,7 @@ package org.languagetool.rules.en;
 import org.languagetool.rules.AbstractSimpleReplaceRule;
 import org.languagetool.rules.Example;
 import org.languagetool.rules.ITSIssueType;
+import org.languagetool.tools.StringTools;
 
 import java.io.IOException;
 import java.util.List;
@@ -71,7 +72,7 @@ public class BritishReplaceRule extends AbstractSimpleReplaceRule {
   @Override
   public String getMessage(String tokenStr, List<String> replacements) {
     return tokenStr + " is a common American expression, in British English it is more common to use: "
-        + String.join(", ", replacements) + ".";
+        + StringTools.join(", ", replacements) + ".";
   }
 
   @Override

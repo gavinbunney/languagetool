@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.languagetool.rules.AbstractSimpleReplaceRule;
+import org.languagetool.tools.StringTools;
 
 /**
  * A rule that matches words or phrases which should not be used and suggests
@@ -71,7 +72,7 @@ public class CastWordsRule extends AbstractSimpleReplaceRule {
   @Override
   public String getMessage(String tokenStr, List<String> replacements) {
     return tokenStr + " é un castelanismo. Empregue no seu sitio: "
-        + String.join(", ", replacements) + ".";
+        + StringTools.join(", ", replacements) + ".";
   }
 
   @Override

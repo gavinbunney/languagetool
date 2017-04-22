@@ -21,6 +21,7 @@ package org.languagetool.languagemodel;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,7 +44,13 @@ public class LuceneLanguageModel extends BaseLanguageModel {
 
   @Nullable
   private static File[] getSubDirectoriesOrNull(File topIndexDir) {
-    return topIndexDir.listFiles((file, name) -> name.matches("index-\\d+"));
+//    return topIndexDir.listFiles((file, name) -> name.matches("index-\\d+"));
+    return topIndexDir.listFiles(new FilenameFilter() {
+      @Override
+      public boolean accept(File dir, String name) {
+        return name.matches("index-\\d+");
+      }
+    });
   }
 
   /**
@@ -68,7 +75,13 @@ public class LuceneLanguageModel extends BaseLanguageModel {
 
   @Override
   public long getCount(List<String> tokens) {
-    return lms.stream().mapToLong(lm -> lm.getCount(tokens)).sum();
+//    return lms.stream().mapToLong(lm -> lm.getCount(tokens)).sum();
+    long sum = 0L;
+    for (LuceneSingleIndexLanguageModel lm : lms) {
+      sum += lm.getCount(tokens);
+    }
+
+    return sum;
   }
 
   @Override
@@ -78,12 +91,21 @@ public class LuceneLanguageModel extends BaseLanguageModel {
 
   @Override
   public long getTotalTokenCount() {
-    return lms.stream().mapToLong(lm -> lm.getTotalTokenCount()).sum();
+//    return lms.stream().mapToLong(lm -> lm.getTotalTokenCount()).sum();
+    long sum = 0L;
+    for (LuceneSingleIndexLanguageModel lm : lms) {
+      sum += lm.getTotalTokenCount();
+    }
+
+    return sum;
   }
 
   @Override
   public void close() {
-    lms.stream().forEach(lm -> lm.close());
+//    lms.stream().forEach(lm -> lm.close());
+    for (LuceneSingleIndexLanguageModel lm : lms) {
+      lm.close();
+    }
   }
 
   @Override

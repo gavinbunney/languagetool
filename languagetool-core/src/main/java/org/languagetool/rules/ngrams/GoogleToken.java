@@ -41,7 +41,7 @@ class GoogleToken {
   final Set<AnalyzedToken> posTags;
 
   GoogleToken(String token, int startPos, int endPos) {
-    this(token, startPos, endPos, Collections.emptySet());
+    this(token, startPos, endPos, new HashSet<AnalyzedToken>());
   }
 
   @Experimental

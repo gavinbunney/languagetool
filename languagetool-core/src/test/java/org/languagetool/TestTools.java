@@ -39,6 +39,7 @@ import org.languagetool.tagging.Tagger;
 import org.languagetool.tagging.disambiguation.Disambiguator;
 import org.languagetool.tokenizers.SentenceTokenizer;
 import org.languagetool.tokenizers.Tokenizer;
+import org.languagetool.tools.StringTools;
 
 import static org.junit.Assert.assertEquals;
 
@@ -102,7 +103,7 @@ public final class TestTools {
     for (Iterator<AnalyzedTokenReadings> iter = output.iterator(); iter.hasNext();) {
       AnalyzedTokenReadings tokenReadings = iter.next();
       List<String> readings = getAsStrings(tokenReadings);
-      outputStr.append(String.join("|", readings));
+      outputStr.append(StringTools.join(readings, "|"));
       if (iter.hasNext()) {
         outputStr.append(" -- ");
       }
@@ -149,7 +150,7 @@ public final class TestTools {
       for (int i = 0; i < output.length; i++) {
         AnalyzedTokenReadings tokenReadings = output[i];
         List<String> readings = getAsStrings(tokenReadings);
-        outputStr.append(String.join("|", readings));
+        outputStr.append(StringTools.join("|", readings));
         if (i < output.length - 1) {
           outputStr.append(' ');
         }

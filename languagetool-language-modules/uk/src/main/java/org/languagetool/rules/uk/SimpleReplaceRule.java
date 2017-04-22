@@ -23,6 +23,7 @@ import org.languagetool.AnalyzedTokenReadings;
 import org.languagetool.JLanguageTool;
 import org.languagetool.rules.AbstractSimpleReplaceRule;
 import org.languagetool.tagging.uk.IPOSTag;
+import org.languagetool.tools.StringTools;
 
 import java.io.IOException;
 import java.util.List;
@@ -70,7 +71,7 @@ public class SimpleReplaceRule extends AbstractSimpleReplaceRule {
   @Override
   public String getMessage(String tokenStr, List<String> replacements) {
     return tokenStr + " - помилкове слово, виправлення: "
-        + String.join(", ", replacements) + ".";
+        + StringTools.join(", ", replacements) + ".";
   }
 
   @Override

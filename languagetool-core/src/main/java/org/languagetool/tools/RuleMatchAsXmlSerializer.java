@@ -114,7 +114,7 @@ public class RuleMatchAsXmlSerializer {
         xml.append(" shortmsg=\"").append(escapeXMLForAPIOutput(match.getShortMessage())).append('"');
       }
       xml.append(" replacements=\"").append(escapeXMLForAPIOutput(
-              String.join("#", match.getSuggestedReplacements()))).append('"');
+              StringTools.join(match.getSuggestedReplacements(), "#"))).append('"');
       String context = contextTools.getContext(match.getFromPos(), match.getToPos(), text);
       // get position of error in context and remove artificial marker again:
       int contextOffset = context.indexOf(startMarker);

@@ -289,7 +289,7 @@ public final class Tools {
     disabledRuleIdsSet.addAll(disabledRuleIds);
     Set<String> enabledRuleIdsSet = new HashSet<>();
     enabledRuleIdsSet.addAll(enabledRuleIds);
-    selectRules(lt, Collections.emptySet(), Collections.emptySet(), disabledRuleIdsSet, enabledRuleIdsSet, useEnabledOnly);
+    selectRules(lt, new HashSet<CategoryId>(), new HashSet<CategoryId>(), disabledRuleIdsSet, enabledRuleIdsSet, useEnabledOnly);
   }
 
   /**

@@ -403,20 +403,20 @@ public class ConfigurationDialog implements ActionListener {
           if (node.isLeaf()) {
             JPopupMenu popup = new JPopupMenu();
             JMenuItem aboutRuleMenuItem = new JMenuItem(messages.getString("guiAboutRuleMenu"));
-            aboutRuleMenuItem.addActionListener(new ActionListener() {
-              @Override
-              public void actionPerformed(ActionEvent actionEvent) {
-                RuleNode node = (RuleNode) tree.getSelectionPath().getLastPathComponent();
-                Rule rule = node.getRule();
-                Language lang = config.getLanguage();
-                if(lang == null) {
-                  lang = Languages.getLanguageForLocale(Locale.getDefault());
-                }
-                Tools.showRuleInfoDialog(tree, messages.getString("guiAboutRuleTitle"),
-                        rule.getDescription(), rule, messages,
-                        lang.getShortCodeWithCountryAndVariant());
-              }
-            });
+//            aboutRuleMenuItem.addActionListener(new ActionListener() {
+//              @Override
+//              public void actionPerformed(ActionEvent actionEvent) {
+//                RuleNode node = (RuleNode) tree.getSelectionPath().getLastPathComponent();
+//                Rule rule = node.getRule();
+//                Language lang = config.getLanguage();
+//                if(lang == null) {
+//                  lang = Languages.getLanguageForLocale(Locale.getDefault());
+//                }
+//                Tools.showRuleInfoDialog(tree, messages.getString("guiAboutRuleTitle"),
+//                        rule.getDescription(), rule, messages,
+//                        lang.getShortCodeWithCountryAndVariant());
+//              }
+//            });
             popup.add(aboutRuleMenuItem);
             popup.show(tree, e.getX(), e.getY());
           }
@@ -493,12 +493,12 @@ public class ConfigurationDialog implements ActionListener {
       public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
           Language motherTongue;
-          if (motherTongueBox.getSelectedItem() instanceof String) {
-            motherTongue = getLanguageForLocalizedName(motherTongueBox.getSelectedItem().toString());
-          } else {
-            motherTongue = (Language) motherTongueBox.getSelectedItem();
-          }
-          config.setMotherTongue(motherTongue);
+//          if (motherTongueBox.getSelectedItem() instanceof String) {
+//            motherTongue = getLanguageForLocalizedName(motherTongueBox.getSelectedItem().toString());
+//          } else {
+//            motherTongue = (Language) motherTongueBox.getSelectedItem();
+//          }
+//          config.setMotherTongue(motherTongue);
         }
       }
     });
@@ -513,28 +513,28 @@ public class ConfigurationDialog implements ActionListener {
     int maxDirDisplayLength = 45;
     String buttonText = dir != null ? StringUtils.abbreviate(dir.getAbsolutePath(), maxDirDisplayLength) : messages.getString("guiNgramDirSelect");
     JButton ngramDirButton = new JButton(buttonText);
-    ngramDirButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        File newDir = Tools.openDirectoryDialog(owner, dir);
-        if (newDir != null) {
-          try {
-            if (config.getLanguage() != null) {  // may happen in office context
-              File checkDir = new File(newDir, config.getLanguage().getShortCode());
-              LuceneLanguageModel.validateDirectory(checkDir);
-            }
-            config.setNgramDirectory(newDir);
-            ngramDirButton.setText(StringUtils.abbreviate(newDir.getAbsolutePath(), maxDirDisplayLength));
-          } catch (Exception ex) {
-            Tools.showErrorMessage(ex);
-          }
-        } else {
-          // not the best UI, but this way user can turn off ngram feature without another checkbox
-          config.setNgramDirectory(null);
-          ngramDirButton.setText(StringUtils.abbreviate(messages.getString("guiNgramDirSelect"), maxDirDisplayLength));
-        }
-      }
-    });
+//    ngramDirButton.addActionListener(new ActionListener() {
+//      @Override
+//      public void actionPerformed(ActionEvent e) {
+//        File newDir = Tools.openDirectoryDialog(owner, dir);
+//        if (newDir != null) {
+//          try {
+//            if (config.getLanguage() != null) {  // may happen in office context
+//              File checkDir = new File(newDir, config.getLanguage().getShortCode());
+//              LuceneLanguageModel.validateDirectory(checkDir);
+//            }
+//            config.setNgramDirectory(newDir);
+//            ngramDirButton.setText(StringUtils.abbreviate(newDir.getAbsolutePath(), maxDirDisplayLength));
+//          } catch (Exception ex) {
+//            Tools.showErrorMessage(ex);
+//          }
+//        } else {
+//          // not the best UI, but this way user can turn off ngram feature without another checkbox
+//          config.setNgramDirectory(null);
+//          ngramDirButton.setText(StringUtils.abbreviate(messages.getString("guiNgramDirSelect"), maxDirDisplayLength));
+//        }
+//      }
+//    });
     panel.add(ngramDirButton, cons);
     JButton helpButton = new JButton(messages.getString("guiNgramHelp"));
     helpButton.addActionListener(new ActionListener() {
